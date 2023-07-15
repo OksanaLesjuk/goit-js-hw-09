@@ -11,7 +11,7 @@ const remainderHours = document.querySelector('[data-hours]');
 const remainderMinutes = document.querySelector("[data-minutes]");
 const remainderSeconds = document.querySelector("[data-seconds]");
 let remainderTime = null;
-
+let timerIsStarted = false;
 
 //слухаємо інпут у методі onClose, кнопка неактивна поки користувач не вибере валідну дату , selectedDates є масивом, тому беремо по індексу
 const options = {
@@ -23,9 +23,16 @@ const options = {
         const chooseDate = selectedDates[0];
         const currentDate = new Date();
         const isValidTime = chooseDate > currentDate;
-        if (!isValidTime) {
+        if (!isValidTime || timerIsStarted) {
             btnStart.disabled = true;
-            Notify.failure("Please choose a date in the future");
+
+
+            if (!isValidTime) {
+                Notify.failure("Please choose a date in the future");
+            }
+            if (timerIsStarted) {
+                Notify.failure("TIMER IS STARTED ALREADY");
+            }
         }
         else {
             btnStart.disabled = false;
@@ -50,7 +57,7 @@ btnStart.addEventListener(
 
 // після  кліку на старт щосекунди порівнюємо вибрану дату з поточниим часом та отримані мілісекунди форматуємо з допомогою функції convertMs
 function onClickStart(evt) {
-
+    timerIsStarted = true;
     const chooseDate = fp.selectedDates[0]; //fp.selectedDates є масивом з одним елементом 
 
     intervalId = setInterval(() => {
@@ -67,10 +74,13 @@ function onClickStart(evt) {
         } else {
             clearInterval(intervalId);
             Notify.info('TIME IS OVER')
+            timerIsStarted = false;
 
         }
 
     }, 1000)
+
+
 }
 
 
