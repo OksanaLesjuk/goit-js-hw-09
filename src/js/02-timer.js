@@ -3,7 +3,6 @@ import "flatpickr/dist/flatpickr.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
-
 const myInput = document.querySelector("#datetime-picker");
 const btnStart = document.querySelector('button[data-start]');
 const remainderDays = document.querySelector('[data-days]');
@@ -26,7 +25,6 @@ const options = {
         if (!isValidTime || timerIsStarted) {
             btnStart.disabled = true;
 
-
             if (!isValidTime) {
                 Notify.failure("Please choose a date in the future");
             }
@@ -36,24 +34,19 @@ const options = {
         }
         else {
             btnStart.disabled = false;
-
         }
     },
 }
 
 
-
 //встановлюємо стан кнопки по замовчуванню
 btnStart.disabled = true;
-
 
 //створюємо екземпляр flatpickr, передаємо наш імпут і об"єкт
 const fp = flatpickr(myInput, options);
 
-
 btnStart.addEventListener(
     'click', onClickStart)
-
 
 // після  кліку на старт щосекунди порівнюємо вибрану дату з поточниим часом та отримані мілісекунди форматуємо з допомогою функції convertMs
 function onClickStart(evt) {
@@ -75,15 +68,9 @@ function onClickStart(evt) {
             clearInterval(intervalId);
             Notify.info('TIME IS OVER')
             timerIsStarted = false;
-
         }
-
     }, 1000)
-
-
 }
-
-
 
 
 function convertMs(ms) {
