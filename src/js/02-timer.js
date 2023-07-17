@@ -66,8 +66,8 @@ function onClickStart(evt) {
             remainderSeconds.textContent = addLeadingZero(seconds);
         } else {
             clearInterval(intervalId);
-            Notify.info('TIME IS OVER')
             timerIsStarted = false;
+            Notify.info('TIME IS OVER')
         }
     }, 1000)
 }
