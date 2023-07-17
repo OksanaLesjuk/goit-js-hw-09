@@ -53,7 +53,7 @@ function onClickStart(evt) {
     timerIsStarted = true;
     const chooseDate = fp.selectedDates[0]; //fp.selectedDates є масивом з одним елементом 
 
-    intervalId = setInterval(() => {
+    let intervalId = setInterval(() => {
         const currentDate = new Date();
 
         remainderTime = chooseDate - currentDate;
