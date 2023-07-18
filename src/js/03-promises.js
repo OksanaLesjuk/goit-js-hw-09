@@ -3,7 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const promisForm = document.querySelector(".form")
 promisForm.addEventListener('submit', onSubmit)
 
-// Додаємо до функції сеттаймаут та отримуємо масив значень при успішному і неуспішному виконанняі промісу
+// Додаємо до функції створення промісу  сеттаймаут та отримуємо масив значень при успішному і неуспішному виконанняі промісу
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -15,6 +15,16 @@ function createPromise(position, delay) {
       }
     }, delay)
   })
+}
+
+// функція обробки результату промісу
+function hendlerPromises(promise) {
+  promise.then(({ position, delay }) => {
+    Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+  })
+    .catch(({ position, delay }) => {
+      Notify.failure(`Rejected promise ${position} in ${delay}ms`);
+    });
 }
 
 
@@ -35,17 +45,14 @@ function onSubmit(evt) {
 
   for (let i = 1; i <= actualAmount; i += 1) {
 
-    createPromise(i, actualDelay)
-      .then(({ position, delay }) => {
-        Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
-      })
-      .catch(({ position, delay }) => {
-        Notify.failure(`Rejected promise ${position} in ${delay}ms`);
-      });
+    const promise = createPromise(i, actualDelay);
+    hendlerPromises(promise);
 
     actualDelay += actualStep;
   }
 };
+
+
 
 
 
