@@ -51,6 +51,7 @@ btnStart.addEventListener(
 // після  кліку на старт щосекунди порівнюємо вибрану дату з поточниим часом та отримані мілісекунди форматуємо з допомогою функції convertMs
 function onClickStart(evt) {
     timerIsStarted = true;
+    btnStart.disabled = true;
     const chooseDate = fp.selectedDates[0]; //fp.selectedDates є масивом з одним елементом 
 
     const intervalId = setInterval(() => {
@@ -65,9 +66,10 @@ function onClickStart(evt) {
             remainderMinutes.textContent = addLeadingZero(minutes);
             remainderSeconds.textContent = addLeadingZero(seconds);
         } else {
+            clearInterval(intervalId);
             timerIsStarted = false;
             Notify.info('TIME IS OVER');
-            clearInterval(intervalId);
+
 
         }
     }, 1000)
