@@ -9,8 +9,13 @@ const remainderDays = document.querySelector('[data-days]');
 const remainderHours = document.querySelector('[data-hours]');
 const remainderMinutes = document.querySelector("[data-minutes]");
 const remainderSeconds = document.querySelector("[data-seconds]");
+
+// оголошуємо змінні із значенням по замовчуванню для залишку часу та стану таймера
+
 let remainderTime = null;
 let timerIsStarted = false;
+
+
 
 //слухаємо інпут у методі onClose, кнопка неактивна поки користувач не вибере валідну дату , selectedDates є масивом, тому беремо по індексу
 const options = {
@@ -39,7 +44,7 @@ const options = {
 }
 
 
-//встановлюємо стан кнопки по замовчуванню
+//встановлюємо стан кнопки по замовчуванню при старті сторінки 
 btnStart.disabled = true;
 
 //створюємо екземпляр flatpickr, передаємо наш імпут і об"єкт
@@ -52,19 +57,16 @@ btnStart.addEventListener(
 function onClickStart(evt) {
     timerIsStarted = true;
     btnStart.disabled = true;
-    const chooseDate = fp.selectedDates[0]; //fp.selectedDates є масивом з одним елементом 
+    const choosedDate = fp.selectedDates[0]; //fp.selectedDates є масивом з одним елементом 
 
     const intervalId = setInterval(() => {
         const currentDate = new Date();
 
-        remainderTime = chooseDate - currentDate;
+        remainderTime = choosedDate - currentDate;
 
         if (remainderTime > 0) {
-            const { days, hours, minutes, seconds } = convertMs(remainderTime);
-            remainderDays.textContent = addLeadingZero(days);
-            remainderHours.textContent = addLeadingZero(hours);
-            remainderMinutes.textContent = addLeadingZero(minutes);
-            remainderSeconds.textContent = addLeadingZero(seconds);
+            updateTimer(remainderTime)
+
         } else {
             clearInterval(intervalId);
             timerIsStarted = false;
@@ -75,6 +77,14 @@ function onClickStart(evt) {
     }, 1000)
 }
 
+// функція оновлення інтерфейсу таймера
+function updateTimer(time) {
+    const { days, hours, minutes, seconds } = convertMs(time);
+    remainderDays.textContent = addLeadingZero(days);
+    remainderHours.textContent = addLeadingZero(hours);
+    remainderMinutes.textContent = addLeadingZero(minutes);
+    remainderSeconds.textContent = addLeadingZero(seconds);
+}
 
 function convertMs(ms) {
     // Number of milliseconds per unit of time

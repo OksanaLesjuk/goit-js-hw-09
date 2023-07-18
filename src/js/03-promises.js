@@ -3,7 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const promisForm = document.querySelector(".form")
 promisForm.addEventListener('submit', onSubmit)
 
-// Додаємо до функції сеттаймаут та отримуємо масив значень 
+// Додаємо до функції сеттаймаут та отримуємо масив значень при успішному і неуспішному виконанняі промісу
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -19,7 +19,7 @@ function createPromise(position, delay) {
 
 
 
-//Колбек для слухача. Отримуємо значення з інпутів, приводимо до числа, створюємо цикл, де на кожній ітерації викликаємо функцію створення  промісу, обробляємо результат через then і catch, після чого збільшуємо delay на крок 
+//Колбек для слухача форми. Отримуємо значення з інпутів, приводимо до числа, створюємо цикл, де на кожній ітерації викликаємо функцію створення  промісу, обробляємо результат через then і catch, після чого збільшуємо delay на крок 
 
 function onSubmit(evt) {
 
