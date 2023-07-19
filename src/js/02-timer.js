@@ -39,6 +39,8 @@ const options = {
         }
         else {
             btnStart.disabled = false;
+            btnStart.addEventListener(
+                'click', onClickStart)
         }
     },
 }
@@ -50,8 +52,8 @@ btnStart.disabled = true;
 //створюємо екземпляр flatpickr, передаємо наш імпут і об"єкт
 const fp = flatpickr(myInput, options);
 
-btnStart.addEventListener(
-    'click', onClickStart)
+// btnStart.addEventListener(
+//     'click', onClickStart)
 
 // після  кліку на старт щосекунди порівнюємо вибрану дату з поточниим часом та отримані мілісекунди форматуємо з допомогою функції convertMs
 function onClickStart(evt) {
@@ -66,7 +68,8 @@ function onClickStart(evt) {
 
         if (remainderTime > 0) {
             updateTimer(remainderTime)
-
+            btnStart.removeEventListener(
+                'click', onClickStart)
         } else {
             clearInterval(intervalId);
             timerIsStarted = false;
